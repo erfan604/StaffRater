@@ -1,5 +1,7 @@
 package com.cmpt276.staff_rater.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,6 +10,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 
 @Entity
@@ -18,8 +26,11 @@ public class StaffRating {
     private Long id;
 
     @NotBlank
-    private String name, roleType;
+    @Size(min = 2, max = 50)
+    private String name;
     
+    @Column (unique = true)
+    @NotBlank
     @Email
     private String email;
 
@@ -27,7 +38,14 @@ public class StaffRating {
     @Max(10)
     private int clarity, niceness, knowledge;
 
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+
+    @Size(max=300)
     private String comment;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public void setId(Long id) {
         this.id = id;
@@ -37,7 +55,7 @@ public class StaffRating {
         this.name = name;
     }
 
-    public void setRoleType(String roleType) {
+    public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
     }
 
@@ -56,7 +74,7 @@ public class StaffRating {
     public void setKnowledge(int knowledge) {
         this.knowledge = knowledge;
     }
-
+    
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -69,7 +87,7 @@ public class StaffRating {
         return name;
     }
 
-    public String getRoleType() {
+    public RoleType getRoleType() {
         return roleType;
     }
 
@@ -96,4 +114,16 @@ public class StaffRating {
     public StaffRating(){
         
     }
+
+    @PrePersist
+    public void recordCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void recordUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }
