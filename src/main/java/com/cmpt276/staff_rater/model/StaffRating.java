@@ -2,28 +2,18 @@ package com.cmpt276.staff_rater.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 
 
 @Entity
+@Table (name = "staffRatings")
 public class StaffRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -47,7 +37,7 @@ public class StaffRating {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,7 +69,7 @@ public class StaffRating {
         this.comment = comment;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -124,6 +114,14 @@ public class StaffRating {
     @PreUpdate
     public void recordUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt(){
+        return updatedAt;
     }
 
 }

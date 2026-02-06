@@ -1,5 +1,7 @@
 package com.cmpt276.staff_rater.model;
 
-public class StaffRatingRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StaffRatingRepository extends JpaRepository<StaffRating, Integer>{
     
 }
