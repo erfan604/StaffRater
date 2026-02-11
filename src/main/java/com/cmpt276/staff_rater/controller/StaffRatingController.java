@@ -23,8 +23,7 @@ public class StaffRatingController {
     public String getAllInfo(Model model) {
         List<StaffRating> ratings = repo.findAll();
         model.addAttribute("ratings", ratings);
-        return "getAllInfo";
+        return "index";
     }
-    
     
 }
