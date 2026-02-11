@@ -13,6 +13,8 @@ import com.cmpt276.staff_rater.model.StaffRatingRepository;
 
 import jakarta.validation.Valid;
 
+import com.cmpt276.staff_rater.design.StaffMemberProfile;
+import com.cmpt276.staff_rater.design.StaffProfileProvider;
 import com.cmpt276.staff_rater.model.StaffRating;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -51,10 +53,16 @@ public class StaffRatingController {
 
     @GetMapping("/ratings/{id}")
     public String details(@PathVariable int id, Model model){
+
         StaffRating rating = repo.findById(id).orElseThrow();
+        StaffMemberProfile profile = StaffProfileProvider.getProfile(rating.getRoleType(), rating.getName());
+
         model.addAttribute("rating", rating);
+        model.addAttribute("displayTitle", profile.displayTitle());
+        
         return "details";
     }
+
 
     @GetMapping("/ratings/{id}/edit")
     public String edit(@PathVariable int id, Model model) {

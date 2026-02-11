@@ -1,15 +1,15 @@
 package com.cmpt276.staff_rater.design;
 
-public class ProfProfile implements StaffMemberProfile {
+public class StaffProfile implements StaffMemberProfile {
 
     private final String name;
 
-    public ProfProfile(String name) {
+    public StaffProfile(String name) {
         this.name = name;
     }
 
     @Override
     public String displayTitle() {
-        return "Prof. " + name;
+        return "Staff: " + name;
     }
 }

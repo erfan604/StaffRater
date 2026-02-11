@@ -1,5 +1,5 @@
 package com.cmpt276.staff_rater.design;
 
-public class StaffMemberProfile {
-    
+public interface StaffMemberProfile {
+    String displayTitle();
 }

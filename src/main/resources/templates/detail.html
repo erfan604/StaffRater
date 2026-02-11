@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rating Details</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body class="container mt-4">
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="m-0">Rating Details</h1>
+    <a class="btn btn-outline-secondary" th:href="@{/}">Back</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title mb-3" th:text="${rating.name}">Name</h4>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="text-muted">Email</div>
+                <div th:text="${rating.email}">email</div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-muted">Role</div>
+                <div th:text="${rating.roleType}">role</div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="text-muted">Clarity</div>
+                <div th:text="${rating.clarity}">0</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted">Niceness</div>
+                <div th:text="${rating.niceness}">0</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted">Knowledge</div>
+                <div th:text="${rating.knowledge}">0</div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="text-muted">Overall Score</div>
+                <div th:text="${#numbers.formatDecimal(rating.overallScore, 1, 2)}">0.00</div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="text-muted">Comment</div>
+                <div th:text="${rating.comment}">comment</div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted">Created At</div>
+                <div th:text="${rating.createdAt}">created</div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-muted">Updated At</div>
+                <div th:text="${rating.updatedAt}">updated</div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex gap-2">
+            <a class="btn btn-primary"
+               th:href="@{/ratings/{id}/edit(id=${rating.id})}">
+                Edit
+            </a>
+
+            <form th:action="@{/ratings/{id}/delete(id=${rating.id})}" method="post"
+                  onsubmit="return confirm('Delete this rating?');">
+                <button type="submit" class="btn btn-danger">
+                    Delete
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
