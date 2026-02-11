@@ -13,7 +13,7 @@ public class StaffRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotBlank
     @Size(min = 2, max = 50)
