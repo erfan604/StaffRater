@@ -124,4 +124,8 @@ public class StaffRating {
         return updatedAt;
     }
 
+    public double getOverallScore() {
+    return (clarity + niceness + knowledge) / 3.0;
+    }
+    
 }

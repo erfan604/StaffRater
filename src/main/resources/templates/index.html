@@ -1,11 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
     <title>Staff Ratings</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 </head>
-<body>
-    <h1>All Staff Ratings</h1>
-    
+<body class="container mt-4">
+
+<h1 class="mb-4">Staff Ratings</h1>
+
+<a class="btn btn-primary mb-3" th:href="@{/ratings/create}">
+    Add New Rating
+</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Overall Score</th>
+            <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="rating : ${ratings}">
+            <td th:text="${rating.name}"></td>
+            <td th:text="${rating.roleType}"></td>
+            <td th:text="${rating.overallScore}"></td>
+            <td>
+                <a class="btn btn-sm btn-outline-secondary"
+                   th:href="@{/ratings/{id}(id=${rating.id})}">
+                    Details
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
