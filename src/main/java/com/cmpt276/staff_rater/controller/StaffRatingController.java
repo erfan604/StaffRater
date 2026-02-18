@@ -43,13 +43,22 @@ public class StaffRatingController {
     }
 
     @PostMapping("/ratings/create")
-    public String createRating (@Valid StaffRating rating, BindingResult result){
+    public String createRating(@Valid StaffRating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("rating", rating);
             return "create";
         }
-        repo.save(rating);
+        try {
+            repo.save(rating);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            result.rejectValue("email", "duplicate", "This email is already in use");
+            model.addAttribute("rating", rating);
+            return "create";
+        }
         return "redirect:/";
     }
+
+
 
     @GetMapping("/ratings/{id}")
     public String details(@PathVariable int id, Model model){
@@ -60,7 +69,7 @@ public class StaffRatingController {
         model.addAttribute("rating", rating);
         model.addAttribute("displayTitle", profile.displayTitle());
         
-        return "details";
+        return "detail";
     }
 
 
@@ -72,12 +81,25 @@ public class StaffRatingController {
 
 
     @PostMapping("/ratings/{id}/edit")
-    public String update(@PathVariable int id, @Valid StaffRating rating, BindingResult result) {
-        if (result.hasErrors()) return "edit";
-        rating.setId(id);
-        repo.save(rating);
+    public String update(@PathVariable int id, @Valid StaffRating rating, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            rating.setId(id);
+            model.addAttribute("rating", rating);
+            return "edit";
+        }
+        try {
+            rating.setId(id);
+            repo.save(rating);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            result.rejectValue("email", "duplicate", "This email is already in use");
+            rating.setId(id);
+            model.addAttribute("rating", rating);
+            return "edit";
+        }
         return "redirect:/";
     }
+
+
 
     @PostMapping("/ratings/{id}/delete")
     public String delete(@PathVariable int id) {

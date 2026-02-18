@@ -26,7 +26,7 @@ public class StaffRating {
 
     @Min(1)
     @Max(10)
-    private int clarity, niceness, knowledge;
+    private Integer clarity, niceness, knowledge;
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
@@ -53,15 +53,15 @@ public class StaffRating {
         this.email = email;
     }
 
-    public void setClarity(int clarity) {
+    public void setClarity(Integer clarity) {
         this.clarity = clarity;
     }
 
-    public void setNiceness(int niceness) {
+    public void setNiceness(Integer niceness) {
         this.niceness = niceness;
     }
 
-    public void setKnowledge(int knowledge) {
+    public void setKnowledge(Integer knowledge) {
         this.knowledge = knowledge;
     }
     
@@ -85,15 +85,15 @@ public class StaffRating {
         return email;
     }
 
-    public int getClarity() {
+    public Integer getClarity() {
         return clarity;
     }
 
-    public int getNiceness() {
+    public Integer getNiceness() {
         return niceness;
     }
 
-    public int getKnowledge() {
+    public Integer getKnowledge() {
         return knowledge;
     }
 
@@ -125,7 +125,9 @@ public class StaffRating {
     }
 
     public double getOverallScore() {
-    return (clarity + niceness + knowledge) / 3.0;
+        int c = clarity != null ? clarity : 0;
+        int n = niceness != null ? niceness : 0;
+        int k = knowledge != null ? knowledge : 0;
+        return (c + n + k) / 3.0;
     }
-    
 }

@@ -10,11 +10,11 @@ public class StaffProfileProvider {
             return new TaProfile(name);
         }
 
-        if (roleType == RoleType.Prof) {
+        if (roleType == RoleType.PROF) {
             return new ProfProfile(name);
         }
 
-        if (roleType == RoleType.Staff) {
+        if (roleType == RoleType.STAFF) {
             return new StaffProfile(name);
         }
 
