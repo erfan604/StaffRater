@@ -18,16 +18,13 @@
 <div class="card">
     <div class="card-body">
 
-        <h4 class="card-title mb-3" th:text="${rating.name}">Name</h4>
+        <h4 class="card-title mb-1" th:text="${rating.name}">Name</h4>
+        <span class="badge bg-secondary mb-3" th:text="${rating.roleType}">role</span>
 
         <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="text-muted">Email</div>
                 <div th:text="${rating.email}">email</div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-muted">Role</div>
-                <div th:text="${rating.roleType}">role</div>
             </div>
 
             <div class="col-md-4">
@@ -55,11 +52,11 @@
 
             <div class="col-md-6">
                 <div class="text-muted">Created At</div>
-                <div th:text="${rating.createdAt}">created</div>
+                <div th:text="${#temporals.format(rating.createdAt, 'yyyy-MM-dd HH:mm')}">created</div>
             </div>
             <div class="col-md-6">
                 <div class="text-muted">Updated At</div>
-                <div th:text="${rating.updatedAt}">updated</div>
+                <div th:text="${#temporals.format(rating.updatedAt, 'yyyy-MM-dd HH:mm')}">updated</div>
             </div>
         </div>
 

@@ -18,6 +18,9 @@ import com.cmpt276.staff_rater.design.StaffProfileProvider;
 import com.cmpt276.staff_rater.model.StaffRating;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+
 
 
 
@@ -43,18 +46,18 @@ public class StaffRatingController {
     }
 
     @PostMapping("/ratings/create")
-    public String createRating(@Valid StaffRating rating, BindingResult result, Model model) {
+    public String createRating(@Valid @ModelAttribute("rating") StaffRating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("rating", rating);
             return "create";
         }
-        try {
-            repo.save(rating);
-        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+        StaffRating existing = repo.findByEmail(rating.getEmail());
+        if (existing != null) {
             result.rejectValue("email", "duplicate", "This email is already in use");
             model.addAttribute("rating", rating);
             return "create";
         }
+        repo.save(rating);
         return "redirect:/";
     }
 
@@ -81,23 +84,24 @@ public class StaffRatingController {
 
 
     @PostMapping("/ratings/{id}/edit")
-    public String update(@PathVariable int id, @Valid StaffRating rating, BindingResult result, Model model) {
+    public String update(@PathVariable int id, @Valid @ModelAttribute("rating") StaffRating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
             rating.setId(id);
             model.addAttribute("rating", rating);
             return "edit";
         }
-        try {
-            rating.setId(id);
-            repo.save(rating);
-        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+        StaffRating existing = repo.findByEmail(rating.getEmail());
+        if (existing != null && existing.getId() != id) {
             result.rejectValue("email", "duplicate", "This email is already in use");
             rating.setId(id);
             model.addAttribute("rating", rating);
             return "edit";
         }
+        rating.setId(id);
+        repo.save(rating);
         return "redirect:/";
     }
+
 
 
 

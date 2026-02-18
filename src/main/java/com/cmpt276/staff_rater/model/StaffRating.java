@@ -26,7 +26,18 @@ public class StaffRating {
 
     @Min(1)
     @Max(10)
-    private Integer clarity, niceness, knowledge;
+    @NotNull(message = "Cannot be empty")
+    private Integer clarity;
+
+    @Min(1)
+    @Max(10)
+    @NotNull(message = "Cannot be empty")
+    private Integer niceness;
+
+    @Min(1)
+    @Max(10)
+    @NotNull(message = "Cannot be empty")
+    private Integer knowledge;
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
