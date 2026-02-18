@@ -16,3 +16,6 @@ Controller Tests
 Persistence Tests
 - Saves a rating to the database and then finds it by ID to make sure it actually saved
 - Deletes a rating and checks that it's actually gone from the database
+
+How to run tests
+- run ./mvnw test
